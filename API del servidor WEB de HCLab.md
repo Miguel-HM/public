@@ -34,7 +34,7 @@ A continuación se detallan los endpoints para acceso por API al servidor web de
 - [api/amasadas](#apiamasadas)
 - [api/ensayos](#apiensayos)
 - [api/peticion](#apipeticion)
-- [Casos especiales](#casos-especiales)
+- [api/validar](#apivalidar)
 
 ___
 ## api/login
@@ -553,31 +553,31 @@ ___
 
 Integra varias acciones sobre las **actas** disponibles en la carpeta en el servidor web del usuario que realice la solicitud.
 
-#### Acción: Consulta
-
-Permite consultar las **actas** emitidas a las que el usuario tiene acceso. Se pueden especificar una serie de filtros para afinar la consulta, o dejarlos en blanco para obtener todas las actas.
-
 **¿Requiere cabecera "Authorization"?** 
 
 Sí
 
+### Acción: Consulta
+
+Permite consultar las **actas** emitidas a las que el usuario tiene acceso. Se pueden especificar una serie de filtros para afinar la consulta, o dejarlos en blanco para obtener todas las actas.
+
 **Parametros de filtro**
 ```json
 {
-  "Cliente": "",
-  "Obra": "",
-  "FechaIni": "",
-  "FechaFin": "",
-  "FecMueIni": "",
-  "FecMueFin": "",
-  "Albaran": "",
-  "DescMat": "",
-  "SuRef": "",
-  "RecogeEn": "",
-  "Localiza": "",
-  "Material": "",
-  "Suministra": "",
-  "Catalogo": ""
+  "cliente": "",
+  "obra": "",
+  "fechaIni": "",
+  "fechaFin": "",
+  "fecMueIni": "",
+  "fecMueFin": "",
+  "albaran": "",
+  "descMat": "",
+  "suRef": "",
+  "recogeEn": "",
+  "localiza": "",
+  "material": "",
+  "suministra": "",
+  "catalogo": ""
 }
 ```
 **Parámetros de respuesta**
@@ -657,9 +657,9 @@ vacía
 
 ```json
 {
-  "Obra": 10,
-  "FechaIni": "2022-01-01",
-  "FechaFin": "2022-12-31",
+  "obra": 10,
+  "fechaIni": "2022-01-01",
+  "fechaFin": "2022-12-31",
 }
 ```
 
@@ -681,8 +681,16 @@ vacía
   "apto": "---"
 }
 ```
+### Acción: Descarga Listado
 
-### Acción: Descarga
+Permite descargar el listado de **actas** emitidas a las que el usuario tiene acceso. Se pueden especificar una serie de filtros para afinar la consulta, o dejarlos en blanco para obtener todas las **actas**.
+
+**Solicitud:** api/actas/listado.csv
+
+**Respuesta:** fichero csv.
+
+
+### Acción: Descarga Acta
 
 Permite descargar una acta concreta identificada por el nombre del archivo con su extensión (basta con copiar el contenido del nodo "pdf" de la consulta anterior).
 
@@ -693,25 +701,24 @@ Permite descargar una acta concreta identificada por el nombre del archivo con s
 
 ___
 ## api/facturas
-
 Integra varias acciones sobre las **facturas** disponibles en la carpeta en el servidor web del usuario que realice la solicitud.
-
-### Acción: Consulta
-
-Permite consultar las **facturas** emitidas a las que el usuario tiene acceso según la configuración del laboratorio. Se pueden especificar una serie de filtros para afinar la consulta, o dejarlos en blanco para obtener todas las facturas.
 
 **¿Requiere cabecera "Authorization"?** 
 
 Sí
 
+### Acción: Consulta
+
+Permite consultar las **facturas** emitidas a las que el usuario tiene acceso según la configuración del laboratorio. Se pueden especificar una serie de filtros para afinar la consulta, o dejarlos en blanco para obtener todas las facturas.
+
 **Parametros de filtro**
 ```json
 {
-  "Cliente": "",
-  "Obra": "",
-  "FechaIni": "",
-  "FechaFin": "",
-  "PorPagar": false //Tipo booleano
+  "cliente": "",
+  "obra": "",
+  "fechaIni": "",
+  "fechaFin": "",
+  "porPagar": false //Tipo booleano
 }
 ```
 **Parámetros de respuesta**
@@ -740,7 +747,7 @@ Sí
 - __proforma__: Indica si la factura es de tipo proforma (0=no, 1=sí). 
 
 
-#### Caso 1: Sin filtro -> Todas las actas a las que se tiene acceso
+#### Caso 1: Sin filtro -> Todas las facturas a las que se tiene acceso
 **Solicitud:**
 vacía
 
@@ -825,15 +832,15 @@ vacía
 ]
 ```
 
-#### Caso 2: Filtrando -> Actas a las que se tiene acceso y que cumplen el filtro
+#### Caso 2: Filtrando -> Facturas a las que se tiene acceso y que cumplen el filtro
 
 **Solicitud:**
 
 ```json
 {
-  "Obra": 4,
-  "FechaIni": "2023-01-01",
-  "FechaFin": "2023-12-31",
+  "obra": 4,
+  "fechaIni": "2023-01-01",
+  "fechaFin": "2023-12-31",
 }
 ```
 
@@ -866,7 +873,16 @@ vacía
 }
 ```
 
-### Acción: Descarga
+### Acción: Descarga Listado
+
+Permite descargar el listado de **facturas** emitidas a las que el usuario tiene acceso. Se pueden especificar una serie de filtros para afinar la consulta, o dejarlos en blanco para obtener todas las **facturas**.
+
+**Solicitud:** api/facturas/listado.csv
+
+**Respuesta:** fichero csv.
+
+
+### Acción: Descarga Factura
 
 Permite descargar una factura concreta identificada por el nombre del archivo con su extensión (basta con copiar el contenido del nodo "pdf" de la consulta anterior).
 
@@ -876,25 +892,27 @@ Permite descargar una factura concreta identificada por el nombre del archivo co
 
 ____
 ## api/amasadas
-Permite consultar las **amasadas** a los que el usuario tiene acceso. Se pueden especificar una serie de filtros para afinar la consulta, o dejarlos en blanco para obtener todos los ensayos.
+Integra varias acciones sobre las **amasadas** disponibles en la carpeta en el servidor web del usuario que realice la solicitud.
 
 **¿Requiere cabecera "Authorization"?** 
 
 Sí
 
+### Acción: Consulta
+Permite consultar las **amasadas** a los que el usuario tiene acceso. Se pueden especificar una serie de filtros para afinar la consulta, o dejarlos en blanco para obtener todos los ensayos.
 
 **Parámetros de soliocitud**
 ```json
 {
-  "Cliente": "",
-  "Obra": "",
-  "Designación": "",  
-  "Localiza": "",
-  "Ultimas": "",
-  "RealizaIni": "",
-  "RealizaFin": "",
-  "RompeIni": "",
-  "RompeFin": ""
+  "cliente": "",
+  "obra": "",
+  "designación": "",  
+  "localiza": "",
+  "ultimas": "",
+  "realizaIni": "",
+  "realizaFin": "",
+  "rompeIni": "",
+  "rompeFin": ""
 }
 ```
 
@@ -942,7 +960,7 @@ vacía
     "sualbaran": "",
     "lote": "Pilares S2",
     "nomcapitulo": "Hormigones",
-    "nomrecoge": "Miguel Hernández Madrigal",
+    "nomrecoge": "Armando Jiménez Ruiz",
     "obra": 16,
     "expediente": 11,
     "nombobra": "Edificio Altavista, Calle Juan Sebastian Elcano, 12, Murcia",
@@ -968,7 +986,7 @@ vacía
     "sualbaran": "",
     "lote": "Pilares -2 y -1",
     "nomcapitulo": "Hormigón",
-    "nomrecoge": "Miguel Hernández Madrigal",
+    "nomrecoge": "Armando Jiménez Ruiz",
     "obra": 13,
     "expediente": 8,
     "nombobra": "Edificio Garraf  - Residencial de 6 plantas , Carrer Coronel San Feliu, 28, Cornellá de Llobregat",
@@ -992,9 +1010,9 @@ vacía
 **Solicitud:**
 ```json
 {
-  "Obra": "16",
-  "RealizaIni": "2024-10-01",
-  "RealizaFin": "2024-10-30",
+  "obra": "16",
+  "realizaIni": "2024-10-01",
+  "realizaFin": "2024-10-30",
 }
 ```
 
@@ -1011,7 +1029,7 @@ vacía
     "sualbaran": "",
     "lote": "Pilares -2 y -1",
     "nomcapitulo": "Hormigón",
-    "nomrecoge": "Miguel Hernández Madrigal",
+    "nomrecoge": "Armando Jiménez Ruiz",
     "obra": 13,
     "expediente": 8,
     "nombobra": "Edificio Garraf  - Residencial de 6 plantas , Carrer Coronel San Feliu, 28, Cornellá de Llobregat",
@@ -1029,27 +1047,38 @@ vacía
   }
 ]
 ```
+
+### Acción: Descarga Listado
+
+Permite descargar el listado de **amasadas** emitidas a las que el usuario tiene acceso. Se pueden especificar una serie de filtros para afinar la consulta, o dejarlos en blanco para obtener todas las **amasadas**.
+
+**Solicitud:** api/amasadas/listado.csv
+
+**Respuesta:** fichero csv.
+
+
 ____
 ## api/ensayos
-
-Permite consultar los **ensayos** a los que el usuario tiene acceso. Se pueden especificar una serie de filtros para afinar la consulta, o dejarlos en blanco para obtener todos los ensayos.
+Integra varias acciones sobre los **ensayos** disponibles en la carpeta en el servidor web del usuario que realice la solicitud.
 
 **¿Requiere cabecera "Authorization"?** 
 
 Sí
 
+### Acción: Consulta
+Permite consultar los **ensayos** a los que el usuario tiene acceso. Se pueden especificar una serie de filtros para afinar la consulta, o dejarlos en blanco para obtener todos los ensayos.
 
 **Parámetros de soliocitud**
 ```json
 {
-  "Cliente": "",
-  "Obra": "",
-  "FecMueIni": "",
-  "FecMueFin": "",
-  "Albaran": "",
-  "SuRef": "",
-  "RecogeEn": "",
-  "Catalogo": ""
+  "cliente": "",
+  "obra": "",
+  "fecMueIni": "",
+  "fecMueFin": "",
+  "albaran": "",
+  "suRef": "",
+  "recogeEn": "",
+  "catalogo": ""
 }
 ```
 
@@ -1106,9 +1135,9 @@ vacía
 
 ```json
 {
-  "Obra": 10,
-  "FechaMueIni": "2022-01-01",
-  "FechaMueFin": "2022-12-31",
+  "obra": 10,
+  "fechaMueIni": "2022-01-01",
+  "fechaMueFin": "2022-12-31",
 }
 ```
 
@@ -1124,7 +1153,13 @@ vacía
   "udes.factura": "1.00+0.00"
 }
 ```
+### Acción: Descarga Listado
 
+Permite descargar el listado de **ensayos** emitidos a los que el usuario tiene acceso. Se pueden especificar una serie de filtros para afinar la consulta, o dejarlos en blanco para obtener todos los **ensayos**.
+
+**Solicitud:** api/ensayos/listado.csv
+
+**Respuesta:** fichero csv.
 
 ____
 ## api/peticion
@@ -1657,3 +1692,18 @@ Vacía
 	"message": "La petición número 21 ha sido cancelada."
 }
 ```
+
+# api/validar
+Permite solicitar un acta a partir de un código seguro de verificación provisto por el laboratorio, sin necesidad de identificarse en el servidor.
+
+**Parámetros de la solicitud**
+- __csv__: string con el código del acta que se desea descargar. Tiene el formato ACXXXXXXXX0000000000 donde las X simbolizan caracteres alfanuméricos y los 0 simbolizan caracteres numéricos. No es obligatorio que el número de caracteres numéricos sea 10, pero sí es el tamaño máximo (ver ejemplo a continuación). 
+
+**Solicitud**
+```json
+{
+  "csv": "ACSHTDMYVZ137"
+}
+```
+**Respuesta:** fichero pdf.
+
